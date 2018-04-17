@@ -1,0 +1,13 @@
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.csprojResolveAssemblyReference.cache
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.Form1.resources
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.Properties.Resources.resources
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.csproj.GenerateResource.cache
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.csproj.CoreCompileInputs.cache
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\bin\Debug\MeltMediaConverter.exe.config
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\bin\Debug\MeltMediaConverter.exe
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\bin\Debug\MeltMediaConverter.pdb
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\bin\Debug\NReco.VideoInfo.dll
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\bin\Debug\NReco.VideoInfo.xml
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.csproj.CopyComplete
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.exe
+C:\Users\Matt\source\repos\MeltMediaConverter\MeltMediaConverter\obj\Debug\MeltMediaConverter.pdb
