@@ -16,5 +16,13 @@ namespace MeltMediaConverter
             Transcode = 3,
         }
 
+        public enum EMediaCheckType
+        {
+            Undefined = 0,
+            Container, 
+            Codec,
+            BitRate,
+            Age,
+        }
     }
 }

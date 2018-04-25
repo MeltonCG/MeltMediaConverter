@@ -40,12 +40,14 @@ namespace MeltMediaConverter
 
         private void ScanDirectory(string directory)
         {
+            ScanningHelper scanHelper = new ScanningHelper();
+
             lblCurrentDirectory.Invoke(new Action(() => { lblCurrentDirectory.Text = directory; }));
             if (Directory.Exists(directory))
             {
                 foreach (string f in Directory.GetFiles(directory))
                 {
-                    var job = new ConversionJob(f,CheckMediaFile(f), prefferedBitRate);
+                    var job = new ConversionJob(f, scanHelper.CheckMediaFile(f), prefferedBitRate);
                     if (job.ConversionType == EConversionTypeRequired.Remux || job.ConversionType == EConversionTypeRequired.Transcode)
                         filesToConvert.Add(job);
                 }
@@ -55,45 +57,6 @@ namespace MeltMediaConverter
                     ScanDirectory(d);
                 }
             }
-        }
-
-        private EConversionTypeRequired CheckMediaFile(string path)
-        {
-            bool isHEVC = false;
-            bool isMp4 = false;
-            bool isCorrectBitRate = false;
-            bool isTwoWeeksOld = false;
-
-            var ffProbe = new FFProbe();
-            MediaInfo videoInfo;
-            try
-            {
-                videoInfo = ffProbe.GetMediaInfo(path);
-            }
-            catch (Exception ex)
-            {
-                return EConversionTypeRequired.NoConversionRequired;
-            }
-
-            if (videoInfo.Streams[0].CodecName.Contains("hevc"))
-                isHEVC = true;
-
-            if (videoInfo.FormatName.Contains("mp4"))
-                isMp4 = true;
-
-            if (File.GetCreationTime(path) < DateTime.Now.AddDays(-14))
-                isTwoWeeksOld = true;
-
-            var bitrate = (new FileInfo(path).Length * 0.008) / videoInfo.Duration.TotalSeconds;
-            if (bitrate <= (prefferedBitRate + 300))
-                isCorrectBitRate = true;
-
-            if (isMp4 && isCorrectBitRate && isHEVC && isTwoWeeksOld)
-                return EConversionTypeRequired.NoConversionRequired;
-            else if (isCorrectBitRate && isHEVC && isTwoWeeksOld)
-                return EConversionTypeRequired.Remux;
-            else
-                return EConversionTypeRequired.Transcode;
         }
 
         private void btnSelectScanDirectory_Click(object sender, EventArgs e)
