@@ -40,6 +40,7 @@
             this.toolStripStatusTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusPass = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusFile = new System.Windows.Forms.ToolStripStatusLabel();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -139,11 +140,21 @@
             this.toolStripStatusFile.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusFile.Text = "toolStripStatusLabel3";
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(12, 154);
+            this.listBox1.MultiColumn = true;
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(635, 264);
+            this.listBox1.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSelectScanDirectory);
@@ -175,6 +186,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusTime;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusPass;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusFile;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

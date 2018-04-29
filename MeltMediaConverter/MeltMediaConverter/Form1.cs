@@ -35,21 +35,36 @@ namespace MeltMediaConverter
             var path = lblDirectoryToScan.Text;
             
             new Task(() => { ScanDirectory(path); }).Start();
-            Console.Write("test");
+        }
+
+        private void RefreshVisibleQueue()
+        {
+            listBox1.Invoke(new Action(() => { listBox1.Items.Clear(); }));
+
+            foreach (var item in filesToConvert)
+            {
+                listBox1.Invoke(new Action(() => { listBox1.Items.Add(item); }));
+            }
         }
 
         private void ScanDirectory(string directory)
         {
             ScanningHelper scanHelper = new ScanningHelper();
 
+            toolStripStatusPass.Text = "Scanning";
             lblCurrentDirectory.Invoke(new Action(() => { lblCurrentDirectory.Text = directory; }));
             if (Directory.Exists(directory))
             {
                 foreach (string f in Directory.GetFiles(directory))
                 {
+                    toolStripStatusFile.Text = Path.GetFileName(f);
+                    var job = new ConversionJob(f,CheckMediaFile(f), prefferedBitRate);
                     var job = new ConversionJob(f, scanHelper.CheckMediaFile(f), prefferedBitRate);
                     if (job.ConversionType == EConversionTypeRequired.Remux || job.ConversionType == EConversionTypeRequired.Transcode)
+                    {
                         filesToConvert.Add(job);
+                       
+                    }
                 }
 
                 foreach (string d in Directory.GetDirectories(directory))
@@ -57,6 +72,46 @@ namespace MeltMediaConverter
                     ScanDirectory(d);
                 }
             }
+            toolStripStatusPass.Text = "Completed";
+        }
+
+        private EConversionTypeRequired CheckMediaFile(string path)
+        {
+            bool isHEVC = false;
+            bool isMp4 = false;
+            bool isCorrectBitRate = false;
+            bool isTwoWeeksOld = false;
+
+            var ffProbe = new FFProbe();
+            MediaInfo videoInfo;
+            try
+            {
+                videoInfo = ffProbe.GetMediaInfo(path);
+            }
+            catch (Exception ex)
+            {
+                return EConversionTypeRequired.NoConversionRequired;
+            }
+
+            if (videoInfo.Streams[0].CodecName.Contains("hevc"))
+                isHEVC = true;
+
+            if (videoInfo.FormatName.Contains("mp4"))
+                isMp4 = true;
+
+            if (File.GetCreationTime(path) < DateTime.Now.AddDays(-14))
+                isTwoWeeksOld = true;
+
+            var bitrate = (new FileInfo(path).Length * 0.008) / videoInfo.Duration.TotalSeconds;
+            if (bitrate <= (prefferedBitRate + 300))
+                isCorrectBitRate = true;
+
+            if ((isMp4 && isCorrectBitRate && isHEVC))
+                return EConversionTypeRequired.NoConversionRequired;
+            else if (isCorrectBitRate && isHEVC)
+                return EConversionTypeRequired.Remux;
+            else
+                return EConversionTypeRequired.Transcode;
         }
 
         private void btnSelectScanDirectory_Click(object sender, EventArgs e)
@@ -84,7 +139,7 @@ namespace MeltMediaConverter
             var pass1Command = string.Format("-y -i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=1 -c:a aac -b:a 128k -f mp4 NUL",job.Path, job.PreferredBitRate);
             var pass2Complete = string.Format("-i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=2 -c:a aac -b:a 128k \"{2}.mp4\"",job.Path, job.PreferredBitRate, GetNewFileName(job.Path, true));
 
-            toolStripStatusFile.Text = job.Path;
+            toolStripStatusFile.Text = Path.GetFileName(job.Path); ;
 
             toolStripStatusPass.Text = "Pass 1";
             ProcessConversion(pass1Command);
