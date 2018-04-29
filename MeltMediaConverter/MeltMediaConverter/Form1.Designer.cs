@@ -41,12 +41,22 @@
             this.toolStripStatusPass = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusFile = new System.Windows.Forms.ToolStripStatusLabel();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.chckMp4 = new System.Windows.Forms.CheckBox();
+            this.chckHEVC = new System.Windows.Forms.CheckBox();
+            this.chckAge = new System.Windows.Forms.CheckBox();
+            this.chckPreffBitRate = new System.Windows.Forms.CheckBox();
+            this.numAge = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.numPrefferredBitRate = new System.Windows.Forms.NumericUpDown();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAge)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrefferredBitRate)).BeginInit();
             this.SuspendLayout();
             // 
             // btnBeginScan
             // 
-            this.btnBeginScan.Location = new System.Drawing.Point(713, 82);
+            this.btnBeginScan.Location = new System.Drawing.Point(713, 121);
             this.btnBeginScan.Name = "btnBeginScan";
             this.btnBeginScan.Size = new System.Drawing.Size(75, 23);
             this.btnBeginScan.TabIndex = 0;
@@ -57,7 +67,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 68);
+            this.label1.Location = new System.Drawing.Point(9, 126);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 13);
             this.label1.TabIndex = 1;
@@ -66,7 +76,7 @@
             // lblCurrentDirectory
             // 
             this.lblCurrentDirectory.AutoSize = true;
-            this.lblCurrentDirectory.Location = new System.Drawing.Point(111, 68);
+            this.lblCurrentDirectory.Location = new System.Drawing.Point(107, 126);
             this.lblCurrentDirectory.Name = "lblCurrentDirectory";
             this.lblCurrentDirectory.Size = new System.Drawing.Size(35, 13);
             this.lblCurrentDirectory.TabIndex = 2;
@@ -75,7 +85,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 35);
+            this.label2.Location = new System.Drawing.Point(9, 103);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 13);
             this.label2.TabIndex = 3;
@@ -84,7 +94,7 @@
             // lblDirectoryToScan
             // 
             this.lblDirectoryToScan.AutoSize = true;
-            this.lblDirectoryToScan.Location = new System.Drawing.Point(114, 35);
+            this.lblDirectoryToScan.Location = new System.Drawing.Point(107, 103);
             this.lblDirectoryToScan.Name = "lblDirectoryToScan";
             this.lblDirectoryToScan.Size = new System.Drawing.Size(35, 13);
             this.lblDirectoryToScan.TabIndex = 4;
@@ -92,7 +102,7 @@
             // 
             // btnSelectScanDirectory
             // 
-            this.btnSelectScanDirectory.Location = new System.Drawing.Point(713, 35);
+            this.btnSelectScanDirectory.Location = new System.Drawing.Point(713, 98);
             this.btnSelectScanDirectory.Name = "btnSelectScanDirectory";
             this.btnSelectScanDirectory.Size = new System.Drawing.Size(75, 23);
             this.btnSelectScanDirectory.TabIndex = 5;
@@ -102,7 +112,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(673, 154);
+            this.button1.Location = new System.Drawing.Point(682, 395);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(106, 23);
             this.button1.TabIndex = 6;
@@ -149,11 +159,96 @@
             this.listBox1.Size = new System.Drawing.Size(635, 264);
             this.listBox1.TabIndex = 8;
             // 
+            // chckMp4
+            // 
+            this.chckMp4.AutoSize = true;
+            this.chckMp4.Location = new System.Drawing.Point(13, 13);
+            this.chckMp4.Name = "chckMp4";
+            this.chckMp4.Size = new System.Drawing.Size(109, 17);
+            this.chckMp4.TabIndex = 9;
+            this.chckMp4.Text = "Check file is .mp4";
+            this.chckMp4.UseVisualStyleBackColor = true;
+            // 
+            // chckHEVC
+            // 
+            this.chckHEVC.AutoSize = true;
+            this.chckHEVC.Location = new System.Drawing.Point(13, 36);
+            this.chckHEVC.Name = "chckHEVC";
+            this.chckHEVC.Size = new System.Drawing.Size(147, 17);
+            this.chckHEVC.TabIndex = 9;
+            this.chckHEVC.Text = "Check file is HEVC (x265)";
+            this.chckHEVC.UseVisualStyleBackColor = true;
+            // 
+            // chckAge
+            // 
+            this.chckAge.AutoSize = true;
+            this.chckAge.Location = new System.Drawing.Point(195, 13);
+            this.chckAge.Name = "chckAge";
+            this.chckAge.Size = new System.Drawing.Size(152, 17);
+            this.chckAge.TabIndex = 9;
+            this.chckAge.Text = "Check if file is X weeks old";
+            this.chckAge.UseVisualStyleBackColor = true;
+            // 
+            // chckPreffBitRate
+            // 
+            this.chckPreffBitRate.AutoSize = true;
+            this.chckPreffBitRate.Location = new System.Drawing.Point(195, 36);
+            this.chckPreffBitRate.Name = "chckPreffBitRate";
+            this.chckPreffBitRate.Size = new System.Drawing.Size(174, 17);
+            this.chckPreffBitRate.TabIndex = 9;
+            this.chckPreffBitRate.Text = "Check if file is prefferred bit rate";
+            this.chckPreffBitRate.UseVisualStyleBackColor = true;
+            // 
+            // numAge
+            // 
+            this.numAge.Location = new System.Drawing.Point(593, 13);
+            this.numAge.Name = "numAge";
+            this.numAge.Size = new System.Drawing.Size(54, 20);
+            this.numAge.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(511, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "File Age (days)";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(493, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(94, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Prefferred Bit Rate";
+            // 
+            // numPrefferredBitRate
+            // 
+            this.numPrefferredBitRate.Location = new System.Drawing.Point(593, 39);
+            this.numPrefferredBitRate.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.numPrefferredBitRate.Name = "numPrefferredBitRate";
+            this.numPrefferredBitRate.Size = new System.Drawing.Size(54, 20);
+            this.numPrefferredBitRate.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.numPrefferredBitRate);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.numAge);
+            this.Controls.Add(this.chckPreffBitRate);
+            this.Controls.Add(this.chckAge);
+            this.Controls.Add(this.chckHEVC);
+            this.Controls.Add(this.chckMp4);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button1);
@@ -167,6 +262,8 @@
             this.Text = "Form1";
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numAge)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPrefferredBitRate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,6 +284,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusPass;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusFile;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox chckMp4;
+        private System.Windows.Forms.CheckBox chckHEVC;
+        private System.Windows.Forms.CheckBox chckAge;
+        private System.Windows.Forms.CheckBox chckPreffBitRate;
+        private System.Windows.Forms.NumericUpDown numAge;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numPrefferredBitRate;
     }
 }
 

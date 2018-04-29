@@ -46,9 +46,10 @@ namespace MeltMediaConverter
             if (checkBitRate)
                 checksCompleted.Add(PerformMediaCheck(EMediaCheckType.BitRate, videoInfo, path));
 
-            if (checksCompleted.All(x => x.Result == false))
+            if (checksCompleted.All(x => x.Result == true))
                 return EConversionTypeRequired.NoConversionRequired;
-            else if (checksCompleted.Contains()
+            else if (checksCompleted.Contains((new MediaCheck() { MediaCheckType = EMediaCheckType.Container, Result = true} ))
+                && checksCompleted.Where(x => x.Result == true).Count() == 1)
                 return EConversionTypeRequired.Remux;
             else
                 return EConversionTypeRequired.Transcode;
@@ -61,15 +62,20 @@ namespace MeltMediaConverter
             switch (checkType)
             {
                 case EMediaCheckType.Container:
+                    result.MediaCheckType = EMediaCheckType.Container;
                     result.Result = videoInfo.FormatName.Contains("mp4");
                     break;
                 case EMediaCheckType.Codec:
+                    result.MediaCheckType = EMediaCheckType.Codec;
                     result.Result = videoInfo.Streams[0].CodecName.Contains("hevc");
                     break;
                 case EMediaCheckType.BitRate:
-                    result.Result = ((new FileInfo(path).Length * 0.008) / videoInfo.Duration.TotalSeconds) <= (1100 + 300);
+                    result.MediaCheckType = EMediaCheckType.BitRate;
+                    var fileBitRate = (new FileInfo(path).Length * 0.008) / videoInfo.Duration.TotalSeconds;
+                    result.Result = (fileBitRate <= (1100 + 300));
                     break;
                 case EMediaCheckType.Age:
+                    result.MediaCheckType = EMediaCheckType.Age;
                     result.Result = File.GetCreationTime(path) < DateTime.Now.AddDays(-14);
                     break;
                 default:
