@@ -57,7 +57,7 @@ namespace MeltMediaConverter
                 {
                     toolStripStatusFile.Text = Path.GetFileName(f);
 
-                    var job = new ConversionJob(f, scanHelper.CheckMediaFile(f, chckHEVC.Checked, chckMp4.Checked, chckAge.Checked, chckPreffBitRate.Checked), (int) numPrefferredBitRate.Value);
+                    var job = new ConversionJob(f, scanHelper.CheckMediaFile(f, chckHEVC.Checked, chckMp4.Checked, chckAge.Checked, chckPreffBitRate.Checked, (int) numPrefferredBitRate.Value), (int) numPrefferredBitRate.Value);
                     if (job.ConversionType == EConversionTypeRequired.Remux || job.ConversionType == EConversionTypeRequired.Transcode)
                     {
                         filesToConvert.Add(job);

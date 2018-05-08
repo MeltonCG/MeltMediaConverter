@@ -12,15 +12,8 @@ namespace MeltMediaConverter
     class ScanningHelper
     {
 
-        
-
-        public EConversionTypeRequired CheckMediaFile(string path, bool checkHEVC, bool checkMP4, bool checkTwoWeeks, bool checkBitRate)
+        public EConversionTypeRequired CheckMediaFile(string path, bool checkHEVC, bool checkMP4, bool checkTwoWeeks, bool checkBitRate, int preferredBitRate)
         {
-            bool isHEVC = false;
-            bool isMp4 = false;
-            bool isCorrectBitRate = false;
-            bool isTwoWeeksOld = false;
-
             List<MediaCheck> checksCompleted = new List<MediaCheck>();
 
             var ffProbe = new FFProbe();
@@ -29,22 +22,22 @@ namespace MeltMediaConverter
             {
                 videoInfo = ffProbe.GetMediaInfo(path);
             }
-            catch (Exception ex)
+            catch
             {
                 return EConversionTypeRequired.NoConversionRequired;
             }
 
             if (checkHEVC)
-                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Codec, videoInfo, path));
+                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Codec, videoInfo, path, null));
 
             if (checkMP4)
-                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Container, videoInfo, path));
+                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Container, videoInfo, path, null));
 
             if (checkTwoWeeks)
-                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Age, videoInfo, path));
+                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Age, videoInfo, path, null));
 
             if (checkBitRate)
-                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.BitRate, videoInfo, path));
+                checksCompleted.Add(PerformMediaCheck(EMediaCheckType.BitRate, videoInfo, path, preferredBitRate));
 
             if (checksCompleted.All(x => x.Result == true))
                 return EConversionTypeRequired.NoConversionRequired;
@@ -55,7 +48,7 @@ namespace MeltMediaConverter
                 return EConversionTypeRequired.Transcode;
         }
 
-        private MediaCheck PerformMediaCheck(EMediaCheckType checkType, MediaInfo videoInfo, string path)
+        private MediaCheck PerformMediaCheck(EMediaCheckType checkType, MediaInfo videoInfo, string path, int? preferredBitRate)
         {
             MediaCheck result = new MediaCheck();
 
@@ -72,7 +65,7 @@ namespace MeltMediaConverter
                 case EMediaCheckType.BitRate:
                     result.MediaCheckType = EMediaCheckType.BitRate;
                     var fileBitRate = (new FileInfo(path).Length * 0.008) / videoInfo.Duration.TotalSeconds;
-                    result.Result = (fileBitRate <= (1100 + 300));
+                    result.Result = (fileBitRate <= (preferredBitRate + 300));
                     break;
                 case EMediaCheckType.Age:
                     result.MediaCheckType = EMediaCheckType.Age;
