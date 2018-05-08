@@ -24,5 +24,12 @@ namespace MeltMediaConverter
             BitRate,
             Age,
         }
+
+        public enum EContainer
+        {
+            Undefined = 0, 
+            MKV,
+            MP4,
+        }
     }
 }
