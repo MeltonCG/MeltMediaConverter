@@ -41,7 +41,7 @@
             this.toolStripStatusPass = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusFile = new System.Windows.Forms.ToolStripStatusLabel();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.chckMp4 = new System.Windows.Forms.CheckBox();
+            this.chckMkv = new System.Windows.Forms.CheckBox();
             this.chckHEVC = new System.Windows.Forms.CheckBox();
             this.chckAge = new System.Windows.Forms.CheckBox();
             this.chckPreffBitRate = new System.Windows.Forms.CheckBox();
@@ -156,18 +156,20 @@
             this.listBox1.Location = new System.Drawing.Point(12, 154);
             this.listBox1.MultiColumn = true;
             this.listBox1.Name = "listBox1";
+            this.listBox1.ScrollAlwaysVisible = true;
+            this.listBox1.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.listBox1.Size = new System.Drawing.Size(635, 264);
             this.listBox1.TabIndex = 8;
             // 
-            // chckMp4
+            // chckMkv
             // 
-            this.chckMp4.AutoSize = true;
-            this.chckMp4.Location = new System.Drawing.Point(13, 13);
-            this.chckMp4.Name = "chckMp4";
-            this.chckMp4.Size = new System.Drawing.Size(109, 17);
-            this.chckMp4.TabIndex = 9;
-            this.chckMp4.Text = "Check file is .mp4";
-            this.chckMp4.UseVisualStyleBackColor = true;
+            this.chckMkv.AutoSize = true;
+            this.chckMkv.Location = new System.Drawing.Point(13, 13);
+            this.chckMkv.Name = "chckMkv";
+            this.chckMkv.Size = new System.Drawing.Size(109, 17);
+            this.chckMkv.TabIndex = 9;
+            this.chckMkv.Text = "Check file is .mkv";
+            this.chckMkv.UseVisualStyleBackColor = true;
             // 
             // chckHEVC
             // 
@@ -248,7 +250,7 @@
             this.Controls.Add(this.chckPreffBitRate);
             this.Controls.Add(this.chckAge);
             this.Controls.Add(this.chckHEVC);
-            this.Controls.Add(this.chckMp4);
+            this.Controls.Add(this.chckMkv);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.button1);
@@ -284,7 +286,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusPass;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusFile;
         private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.CheckBox chckMp4;
+        private System.Windows.Forms.CheckBox chckMkv;
         private System.Windows.Forms.CheckBox chckHEVC;
         private System.Windows.Forms.CheckBox chckAge;
         private System.Windows.Forms.CheckBox chckPreffBitRate;

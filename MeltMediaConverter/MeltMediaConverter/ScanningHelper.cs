@@ -14,13 +14,8 @@ namespace MeltMediaConverter
 
         
 
-        public EConversionTypeRequired CheckMediaFile(string path, bool checkHEVC, bool checkMP4, bool checkTwoWeeks, bool checkBitRate)
+        public EConversionTypeRequired CheckMediaFile(string path, bool checkHEVC, bool checkMkv, bool checkTwoWeeks, bool checkBitRate)
         {
-            bool isHEVC = false;
-            bool isMp4 = false;
-            bool isCorrectBitRate = false;
-            bool isTwoWeeksOld = false;
-
             List<MediaCheck> checksCompleted = new List<MediaCheck>();
 
             var ffProbe = new FFProbe();
@@ -37,7 +32,7 @@ namespace MeltMediaConverter
             if (checkHEVC)
                 checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Codec, videoInfo, path));
 
-            if (checkMP4)
+            if (checkMkv)
                 checksCompleted.Add(PerformMediaCheck(EMediaCheckType.Container, videoInfo, path));
 
             if (checkTwoWeeks)
@@ -63,7 +58,7 @@ namespace MeltMediaConverter
             {
                 case EMediaCheckType.Container:
                     result.MediaCheckType = EMediaCheckType.Container;
-                    result.Result = videoInfo.FormatName.Contains("mp4");
+                    result.Result = videoInfo.FormatName.Contains("matroska");
                     break;
                 case EMediaCheckType.Codec:
                     result.MediaCheckType = EMediaCheckType.Codec;

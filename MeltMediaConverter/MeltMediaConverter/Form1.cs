@@ -41,7 +41,7 @@ namespace MeltMediaConverter
 
             foreach (var item in filesToConvert)
             {
-                listBox1.Invoke(new Action(() => { listBox1.Items.Add(item); }));
+                listBox1.Invoke(new Action(() => { listBox1.Items.Add(item.Path); }));
             }
         }
 
@@ -57,10 +57,11 @@ namespace MeltMediaConverter
                 {
                     toolStripStatusFile.Text = Path.GetFileName(f);
 
-                    var job = new ConversionJob(f, scanHelper.CheckMediaFile(f, chckHEVC.Checked, chckMp4.Checked, chckAge.Checked, chckPreffBitRate.Checked), (int) numPrefferredBitRate.Value);
+                    var job = new ConversionJob(f, scanHelper.CheckMediaFile(f, chckHEVC.Checked, chckMkv.Checked, chckAge.Checked, chckPreffBitRate.Checked), (int) numPrefferredBitRate.Value);
                     if (job.ConversionType == EConversionTypeRequired.Remux || job.ConversionType == EConversionTypeRequired.Transcode)
                     {
                         filesToConvert.Add(job);
+                        RefreshVisibleQueue();
                     }
                 }
 
@@ -94,8 +95,8 @@ namespace MeltMediaConverter
             watch.Start();
             var oldfile = job.Path;
             
-            var pass1Command = string.Format("-y -i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=1 -c:a aac -b:a 128k -f mp4 NUL",job.Path, job.PreferredBitRate);
-            var pass2Complete = string.Format("-i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=2 -c:a aac -b:a 128k \"{2}.mp4\"",job.Path, job.PreferredBitRate, GetNewFileName(job.Path, true));
+            var pass1Command = string.Format("-y -i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=1 -c:a aac -b:a 128k -f mkv NUL",job.Path, job.PreferredBitRate);
+            var pass2Complete = string.Format("-i \"{0}\" -c:v libx265 -b:v {1}k -x265-params pass=2 -c:a aac -b:a 128k \"{2}.mkv\"",job.Path, job.PreferredBitRate, GetNewFileName(job.Path, true));
 
             toolStripStatusFile.Text = Path.GetFileName(job.Path); ;
 
@@ -107,6 +108,7 @@ namespace MeltMediaConverter
 
             File.Delete(oldfile);
             //filesToConvert.Remove(job);
+            //RefreshVisibleQueue();
         }
 
         private string GetNewFileName(string path, bool withPath)
@@ -181,18 +183,25 @@ namespace MeltMediaConverter
         private void ProcessConversion(string args)
         {
             Process process = new Process();
-            process.StartInfo.RedirectStandardOutput = false;
-            process.StartInfo.RedirectStandardError = false;
-            process.StartInfo.FileName = @"ffmpeg.exe";
+            process.StartInfo.RedirectStandardOutput = true;  // Can be false if you don't care about output
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.FileName = "C:\\Users\\mattf\\AppData\\Local\\Microsoft\\WinGet\\Links\\ffmpeg.exe";
 
             process.StartInfo.Arguments = args;
 
-
             process.StartInfo.UseShellExecute = true;
-            process.StartInfo.CreateNoWindow = true;
+            process.StartInfo.CreateNoWindow = false;
             process.Start();
 
+            // Optional: Read error output (FFmpeg writes mostly to stderr)
+            string errorOutput = process.StandardError.ReadToEnd();
             process.WaitForExit();
+
+            // Optional: Log errors if needed
+            if (!string.IsNullOrWhiteSpace(errorOutput))
+            {
+                Console.WriteLine("FFmpeg error output:\n" + errorOutput);
+            }
         }
     }
 }
